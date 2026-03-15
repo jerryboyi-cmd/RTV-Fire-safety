@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RTV Safety Audit Dashboard</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+  <meta name="theme-color" content="#d32f2f" />
+</head>
+<body>
+  <header>
+    <img src="./icons/icon-192.png" alt="logo" />
+    <h1>RTV Safety Audit Dashboard</h1>
+  </header>
+  <div class="container">
+    <section id="homeView" class="view">
+      <div class="card">
+        <h2 class="section-title">Start a New Audit</h2>
+        <div class="grid">
+          <label>Site / Facility<input type="text" id="site" placeholder="e.g., Head Office" /></label>
+          <label>Location<input type="text" id="location" placeholder="City / Address" /></label>
+          <label>Auditor<input type="text" id="auditor" placeholder="Your name" /></label>
+          <label>Date<input type="date" id="auditDate" /></label>
+        </div>
+        <button class="btn" id="startAuditBtn">Start</button>
+      </div>
+      <div class="card">
+        <h2 class="section-title">Saved Audits</h2>
+        <ul id="auditList" class="list"></ul>
+      </div>
+    </section>
+
+    <section id="auditView" class="view hidden"> 
+      <div class="card"> 
+        <div id="auditMeta"></div>
+        <div class="progress"><div id="progressBar"></div></div>
+      </div>
+      <div id="sectionContainer"></div>
+      <div class="card no-print">
+        <button class="btn" id="saveAuditBtn">Save</button>
+        <button class="btn ghost" id="exportBtn">Export CSV</button>
+        <button class="btn secondary" id="printBtn">Export PDF</button>
+      </div>
+    </section>
+
+    <section id="detailView" class="view hidden">
+      <div class="card" id="questionCard"></div>
+      <div class="card no-print">
+        <button class="btn" id="prevQ">Previous</button>
+        <button class="btn" id="nextQ">Next</button>
+      </div>
+    </section>
+
+    <section id="dashboardView" class="view hidden">
+      <div class="card">
+        <h2 class="section-title">Dashboard</h2>
+        <div id="dashEmpty" class="muted"></div>
+        <div id="kpis" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;">
+          <div class="card" style="text-align:center"><div style="font-size:12px;color:#9ca3af">Overall Avg</div><div id="kpiOverall" style="font-size:28px;font-weight:800;">–</div></div>
+          <div class="card" style="text-align:center"><div style="font-size:12px;color:#9ca3af">Audits</div><div id="kpiAudits" style="font-size:28px;font-weight:800;">0</div></div>
+        </div>
+        <div id="sectionCards" class="cards-grid" style="margin-bottom:12px;"></div>
+        <div class="card"><div class="section-title">Score Trend</div><canvas id="chartTrend" height="160"></canvas></div>
+        <div class="card"><div class="section-title">Average Score by Section</div><canvas id="chartSection" height="220"></canvas></div>
+        <div class="card"><div class="section-title">Actions — Open vs Closed</div><canvas id="chartActions" height="160"></canvas></div>
+      </div>
+    </section>
+  </div>
+
+  <nav class="nav no-print">
+    <button id="navHome">Home</button>
+    <button id="navAudit">Audit</button>
+    <button id="navDashboard">Dashboard</button>
+  </nav>
+
+  <script> if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./service-worker.js'); }); } </script>
+  <script id="questionsData" type="application/json"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
